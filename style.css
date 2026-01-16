@@ -12,6 +12,36 @@ body {
   color: #1f3d1f;
 }
 
+/* navebar */
+.logo-navbar {
+  background-color: #eaf4de;
+  padding: 24px 0;
+}
+
+/* THIS is the magic */
+.logo-wrapper {
+  display: inline-flex;        /* 👈 hug content */
+  align-items: center;
+  justify-content: center;
+
+  background-color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 40px;
+}
+
+.logo-img {
+  height: 40px;
+}
+.logo-navbar {
+  position: fixed;        /* 👈 fixes the nav */
+  top: 10px;              /* space from top */
+  left: 50%;              /* center horizontally */
+  transform: translateX(-50%);
+
+  background-color: transparent;
+  z-index: 1000;          /* stays above all content */
+}
+
 /* Hero Section */
 .hero-section {
   width: 100%;
@@ -138,7 +168,7 @@ body {
 .product-card {
   background: #ffffff;
   border-radius: 47px;
-  padding: 8px;
+  padding: 8px 8px 16px 8px;
   text-align: center;
   height: 100%;
 }

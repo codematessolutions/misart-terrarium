@@ -16,6 +16,23 @@
 </head>
 <body>
 
+<nav class="logo-navbar">
+  <div class="container text-center">
+
+    <div class="logo-wrapper">
+      <img
+        src="assets/navebar logo.png"
+        alt="Misart Terrarium"
+        class="logo-img"
+      >
+    </div>
+
+  </div>
+</nav>
+
+ 
+
+
     <section class="hero-section">
   <div class="container h-100">
     <div class="row h-100 align-items-center">
@@ -66,6 +83,9 @@
   </div>
 </section>
 
+
+
+
  <!-- book product -->
   <section class="booking-section">
   <div class="container">
@@ -81,57 +101,9 @@
     </div>
 
     <!-- Cards -->
-    <div class="row g-4">
+     <div class="row" id="product-list"></div>
 
-      <!-- Card 1 -->
-      <div class="col-lg-3 col-md-6">
-        <div class="product-card">
-          <img src="assets/booking product card image.jpg" alt="Terrarium">
-
-          <h5>Eden Cube Terrarium</h5>
-          <p>Glass container, live moss, succ...</p>
-
-          <button class="btn book-btn">Book Now</button>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="col-lg-3 col-md-6">
-        <div class="product-card">
-          <img src="assets/booking product card image.jpg" alt="Terrarium">
-
-          <h5>Eden Cube Terrarium</h5>
-          <p>Glass container, live moss, succ...</p>
-
-          <button class="btn book-btn">Book Now</button> 
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="col-lg-3 col-md-6">
-        <div class="product-card">
-          <img src="assets/booking product card image.jpg" alt="Terrarium">
-
-          <h5>Eden Cube Terrarium</h5>
-          <p>Glass container, live moss, succ...</p>
-
-          <button class="btn book-btn">Book Now</button>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="col-lg-3 col-md-6">
-        <div class="product-card">
-          <img src="assets/booking product card image.jpg" alt="Terrarium">
-
-          <h5>Eden Cube Terrarium</h5>
-          <p>Glass container, live moss, succ...</p>
-
-          <button class="btn book-btn">Book Now</button>
-        </div>
-      </div>
-
-    </div>
+    
   </div>
 </section>
 
@@ -295,6 +267,93 @@
     </div>
   </div>
 </section>
+
+
+<script src="products.js"></script>
+<script src="home.js"></script>
+
+<!-- <script>
+  const whatsappNumber = "918086783125"; // your WhatsApp number
+
+  document.querySelectorAll(".whatsapp-btn").forEach(button => {
+    button.addEventListener("click", function () {
+
+      const productName = this.dataset.name;
+      const productImage = this.dataset.image;
+
+      const message = 
+        `Hi Misart,%0A%0A` +
+        `I want to book the following terrarium:%0A` +
+        `🌿 Product: ${productName}%0A` +
+        `🖼 Image: ${productImage}`;
+
+      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+      window.open(whatsappURL, "_blank");
+    });
+  });
+</script> -->
+
+<script>
+  const whatsappNumber = "918086783125";
+
+  document.querySelectorAll(".whatsapp-btn").forEach(button => {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      // Find the closest product card
+      const productCard = this.closest(".product-card");
+
+      // Read product name from h5
+      const productName = productCard.querySelector(".product-name").innerText;
+
+      // Read image from data attribute
+      const productImage = this.dataset.image;
+
+      const message = 
+        `Hi Misart,
+
+I want to book the following terrarium:
+🌿 Product: ${productName}
+🖼 Image: ${productImage}`;
+
+      const encodedMessage = encodeURIComponent(message);
+
+      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+      window.open(whatsappURL, "_blank");
+    });
+  });
+</script>
+
+<script>
+  // Card click → navigate to product page
+  document.querySelectorAll(".clickable-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const link = card.dataset.link;
+      window.location.href = link;
+    });
+  });
+
+  // WhatsApp button → STOP card click
+  document.querySelectorAll(".whatsapp-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation(); // 👈 VERY IMPORTANT
+    });
+  });
+</script>
+  
+<!-- JavaScript (ONE handler for card + button) -->
+<script>
+  document.querySelectorAll(".clickable-card").forEach(card => {
+    card.addEventListener("click", () => {
+      window.location.href = card.dataset.link;
+    });
+  });
+</script>
+
+
+
 
 
 
