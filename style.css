@@ -15,7 +15,7 @@ body {
 /* navebar */
 .logo-navbar {
   background-color: #eaf4de;
-  padding: 24px 0;
+  padding: 0px 0;
 }
 
 /* THIS is the magic */
@@ -32,6 +32,14 @@ body {
 .logo-img {
   height: 40px;
 }
+
+@media (max-width: 390px) {
+
+  .logo-img {
+    height: 30px;
+  }
+}
+
 .logo-navbar {
   position: fixed;        /* 👈 fixes the nav */
   top: 10px;              /* space from top */
@@ -183,12 +191,20 @@ body {
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;     /* number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .product-card p {
   font-size: 14px;
   color: #7a7a7a;
   margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;     /* number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Button */
@@ -212,6 +228,8 @@ body {
   padding: 80px 0;
   font-family: 'Inter', sans-serif;
 }
+
+
 
 .ecosystem-item {
   width: 100%;
@@ -431,4 +449,6 @@ body {
   transform: scale(1.1);
 }
 
+
+/* product details page css */
 
