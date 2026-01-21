@@ -450,5 +450,85 @@ body {
 }
 
 
-/* product details page css */
+/* selling product  */
+
+#Selling-Product {
+  padding: 100px 0;
+}
+
+.selling-product-card {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.selling-product-image {
+  width: 300px;
+  height: auto;
+  border-radius: 32px;
+  object-fit: cover;
+}
+
+.selling-product-content {
+  max-width: 100%;
+}
+.selling-product-title {
+  font-size: 42px;
+  font-weight: 100;
+  margin-bottom: 12px;
+}
+.selling-product-size {
+  font-size: 2rem;
+  font-weight: 100;
+  margin-bottom: 10px;
+}
+.selling-product-description {
+  font-size: 18px;
+  font-weight: 100;
+  line-height: 1.6;
+  color: #4a4a4a;
+}
+.selling-product-action {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 20px;
+}
+.selling-product-price {
+  font-size: 28px;
+  font-weight: 100;
+  
+}
+.order-btn {
+  background-color: #1f5d22;
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 16px;
+  border: none;
+}
+
+.order-btn:hover {
+  background-color: #174a1a;
+}
+
+@media (max-width: 768px) {
+  .selling-product-card {
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .selling-product-image {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .selling-product-action {
+    justify-content: center;
+  }
+}
+
+
+
 

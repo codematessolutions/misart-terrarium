@@ -1,61 +1,3 @@
-// const products = [
-//   {
-//     id: 1,
-//     name: "Eden Cube Terrarium",
-//     description: "Glass container, live moss, succulents",
-//     image: "assets/booking product card image.jpg",
-//     page: "product.html"
-//   },
-//   {
-//     id: 2,
-//     name: "Forest Dome Terrarium",
-//     description: "Dome glass, preserved plants",
-//     image: "assets/forest.jpg",
-//     page: "forest.html"
-//   }
-// ];
-
-
-
-// const products = [
-//   {
-//     id: "eden-cube",
-//     name: "Eden Cube Terrarium",
-//     description: "Glass container, live moss, succulents",
-//     image: "assets/booking product card image.jpg"
-//   },
-//   {
-//     id: "plantas",
-//     name: "Plantas Terrarium",
-//     description: "Glass container, live moss, plants",
-//     image: "assets/booking product 2.png"
-//   },
-//   {
-//     id: "forest-dome",
-//     name: "Forest Dome Terrarium",
-//     description: "Mini forest ecosystem",
-//     image: "assets/booking product 3.png"
-//   },
-//   {
-//     id: "waterfall",
-//     name: "Waterfall Terrarium",
-//     description: "Rock & water themed terrarium",
-//     image: "assets/booking product 4.png"
-//   },
-//   {
-//     id: "waterfall",
-//     name: "Waterfall Terrarium",
-//     description: "Rock & water themed terrarium",
-//     image: "assets/booking product 4.png"
-//   },
-//   {
-//     id: "waterfall",
-//     name: "Waterfall Terrarium",
-//     description: "Rock & water themed terrarium",
-//     image: "assets/booking product 4.png"
-//   }
-  
-// ];
 
 const products = [
   {
@@ -88,4 +30,59 @@ const products = [
       "The Sea of Haworthia Terrarium Kit is a Mini Jungle, bringing in a lot of green to sooth your eyes at home!"
   }
 ];
+
+const sellingProducts = [
+  {
+    id: "eden-cube-sp",
+    name: "Eden Cube Terrarium",
+    image: "assets/Selling product/selling product 1.png",
+    size: "Small (6” x 6”)",
+    description: "Glass container, live moss, succulent plant",
+    price: 5266
+  },
+  {
+    id: "forest-dome-sp",
+    name: "Forest Dome Terrarium",
+    image: "assets/Selling product/selling  product 2.png",
+    size: "Medium",
+    description: "Mini forest ecosystem with stones",
+    price: 4565
+  }
+];
+
+
+
+// const sellingContainer = document.getElementById("sellingProductList");
+
+// if (sellingContainer) {
+//   sellingProducts.forEach(product => {
+//     const card = document.createElement("div");
+//     card.className = "selling-product-card";
+
+//     card.innerHTML = `
+//       <div class="selling-product-image">
+//         <img src="${product.image}" alt="${product.name}">
+//       </div>
+
+//       <div class="selling-product-content">
+//         <h3>${product.name}</h3>
+//         <p class="selling-size">Size : ${product.size}</p>
+//         <p class="selling-desc">${product.description}</p>
+
+//         <div class="selling-footer">
+//           <span class="selling-price">₹${product.price}</span>
+//           <button class="btn order-btn" onclick="goToPurchase('${product.id}')">
+//             Order Now
+//           </button>
+//         </div>
+//       </div>
+//     `;
+
+//     sellingContainer.appendChild(card);
+//   });
+// }
+
+// function goToPurchase(productId) {
+//   window.location.href = `purchase.html?id=${productId}`;
+// }
 
