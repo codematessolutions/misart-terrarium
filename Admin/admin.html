@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misart Admin</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2 class="logo">Misart Admin</h2>
+    <nav>
+      <button onclick="showOrders()">📦 Orders</button>
+      <button onclick="showBookings()">🌿 Bookings</button>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content">
+    <h1 id="pageTitle">Orders</h1>
+    <div id="listContainer" class="list"></div>
+  </main>
+
+</div>
+
+<!-- ✅ MUST be module -->
+<script type="module" src="admin.js"></script>
+
+</body>
+</html>

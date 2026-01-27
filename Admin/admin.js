@@ -1,55 +1,67 @@
-const orders = [
-  {
-    id: "ORD001",
-    productName: "Eden Cube Terrarium",
-    customerName: "Junaid",
-    price: 5266,
-    status: "New"
-  }
-];
-
-const bookings = [
-  {
-    id: "BK001",
-    productName: "Three Jaded Pandas",
-    customerName: "Ameen",
-    status: "Pending"
-  }
-];
+// 🔥 FIREBASE IMPORT
+import { db } from "../firebase.js";
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const listContainer = document.getElementById("listContainer");
 const pageTitle = document.getElementById("pageTitle");
 
-function showOrders() {
+// MAKE FUNCTIONS GLOBAL (important)
+window.showOrders = async function () {
   pageTitle.innerText = "Orders";
-  listContainer.innerHTML = "";
+  listContainer.innerHTML = "<p>Loading orders...</p>";
 
-  orders.forEach(order => {
-    listContainer.innerHTML += `
-      <div class="card">
-        <h3>${order.productName}</h3>
-        <p>Customer: ${order.customerName}</p>
-        <p>Price: ₹${order.price}</p>
-        <p class="status">Status: ${order.status}</p>
-      </div>
-    `;
-  });
-}
+  try {
+    const q = query(
+      collection(db, "orders"),
+      orderBy("createdAt", "desc")
+    );
 
-function showBookings() {
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      listContainer.innerHTML = "<p>No orders found</p>";
+      return;
+    }
+
+    listContainer.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const order = doc.data();
+
+      listContainer.innerHTML += `
+        <div class="card">
+          <h3>${order.productName}</h3>
+          <p><strong>Customer:</strong> ${order.customerName}</p>
+          <p><strong>Mobile:</strong> ${order.mobileNumber}</p>
+          <p><strong>Price:</strong> ₹${order.productPrice}</p>
+          <p class="status"><strong>Status:</strong> ${order.status}</p>
+
+          ${
+            order.paymentScreenshotUrl
+              ? `<a href="${order.paymentScreenshotUrl}" target="_blank">
+                   View Payment Screenshot
+                 </a>`
+              : ""
+          }
+        </div>
+      `;
+    });
+
+  } catch (err) {
+    console.error("Error loading orders:", err);
+    listContainer.innerHTML = "<p>Error loading orders</p>";
+  }
+};
+
+window.showBookings = function () {
   pageTitle.innerText = "Bookings";
-  listContainer.innerHTML = "";
+  listContainer.innerHTML = "<p>Bookings coming soon 🌿</p>";
+};
 
-  bookings.forEach(booking => {
-    listContainer.innerHTML += `
-      <div class="card">
-        <h3>${booking.productName}</h3>
-        <p>Customer: ${booking.customerName}</p>
-        <p class="status">Status: ${booking.status}</p>
-      </div>
-    `;
-  });
-}
-
-// Load orders by default
+// Auto-load orders
 showOrders();

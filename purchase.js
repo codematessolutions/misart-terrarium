@@ -1,26 +1,21 @@
-// // 1. Get product id from URL
-// const params = new URLSearchParams(window.location.search);
-// const productId = params.get("id");
+// ===============================
+// 🔥 FIREBASE IMPORTS
+// ===============================
+import { db } from "./firebase.js";
+import { collection, addDoc, serverTimestamp } from
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-// // 2. Find product from products array
-// const product = products.find(p => p.id === productId);
+const storage = getStorage();
 
-// if (!product) {
-//   alert("Product not found");
-// }
-
-// // 3. Fill Selected Product UI
-// document.getElementById("selectedProductImage").src = product.image;
-// document.getElementById("selectedProductImage").alt = product.name;
-
-// document.getElementById("selectedProductName").innerText = product.name;
-// document.getElementById("selectedProductSize").innerText = `Size : ${product.size}`;
-// document.getElementById("selectedProductPrice").innerText = `₹${product.price}`;
-
-
+// ===============================
+// 🔹 GET PRODUCT FROM URL
+// ===============================
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
 
+// sellingProducts must come from products.js
 const product = sellingProducts.find(p => p.id === productId);
 
 if (!product) {
@@ -28,106 +23,108 @@ if (!product) {
   throw new Error("Invalid product ID");
 }
 
-// Fill selected product UI
+// ===============================
+// 🔹 FILL PRODUCT UI
+// ===============================
 document.getElementById("selectedProductImage").src = product.image;
 document.getElementById("selectedProductName").innerText = product.name;
 document.getElementById("selectedProductSize").innerText = `Size : ${product.size}`;
 document.getElementById("selectedProductPrice").innerText = `₹${product.price}`;
 
-// Mobile sticky bar (if exists)
-const mobilePrice = document.getElementById("mobileProductPrice");
-if (mobilePrice) {
-  mobilePrice.innerText = `₹${product.price}`;
-}
-
-// LIMIT TO 10 DIGITS
-
-const mobileInput = document.getElementById("mobileNumber");
-
-// Allow only numbers
-mobileInput.addEventListener("input", () => {
-  mobileInput.value = mobileInput.value.replace(/\D/g, "");
-
-  // Limit to 10 digits
-  if (mobileInput.value.length > 10) {
-    mobileInput.value = mobileInput.value.slice(0, 10);
-  }
-});
-
-// 1. Get elements FIRST (after DOM is ready)
+// ===============================
+// 🔹 DOM READY
+// ===============================
 document.addEventListener("DOMContentLoaded", () => {
 
+  const customerNameInput = document.getElementById("customerName");
   const mobileInput = document.getElementById("mobileNumber");
+  const addressInput = document.getElementById("deliveryAddress");
+  const screenshotInput = document.getElementById("paymentScreenshot");
   const submitBtn = document.querySelector(".submit-btn");
 
-  // 2. Allow only numbers + limit to 10 digits
+  // ===============================
+  // 🔹 MOBILE NUMBER VALIDATION
+  // ===============================
   mobileInput.addEventListener("input", () => {
     mobileInput.value = mobileInput.value.replace(/\D/g, "");
-
     if (mobileInput.value.length > 10) {
       mobileInput.value = mobileInput.value.slice(0, 10);
     }
   });
 
-  // 3. Validate on submit (THIS IS YOUR CODE)
-  submitBtn.addEventListener("click", function (e) {
-    const mobile = mobileInput.value;
-
-    if (mobile.length !== 10) {
-      e.preventDefault();
-      alert("Please enter a valid 10-digit mobile number");
-      mobileInput.focus();
-      return;
-    }
-  });
-
-});
-
-// while submit dat going to google sheet 
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const submitBtn = document.querySelector(".submit-btn");
-
-  submitBtn.addEventListener("click", function (e) {
+  // ===============================
+  // 🔹 SUBMIT ORDER
+  // ===============================
+  submitBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    // Form values
-    const customerName = document.getElementById("customerName").value.trim();
-    const mobileNumber = document.getElementById("mobileNumber").value.trim();
-    const deliveryAddress = document.getElementById("deliveryAddress").value.trim();
+    const customerName = customerNameInput.value.trim();
+    const mobileNumber = mobileInput.value.trim();
+    const deliveryAddress = addressInput.value.trim();
+    // const screenshotFile = screenshotInput.files[0];
 
-    // Product values
-    const productName = document.getElementById("selectedProductName").innerText;
-    const productSize = document.getElementById("selectedProductSize").innerText;
-    const productPrice = document.getElementById("selectedProductPrice").innerText;
-
-    // Validation
+    // VALIDATION
     if (!customerName || !mobileNumber || !deliveryAddress) {
       alert("Please fill all fields");
       return;
     }
 
     if (!/^\d{10}$/.test(mobileNumber)) {
-      alert("Mobile number must be 10 digits");
+      alert("Please enter a valid 10-digit mobile number");
+      mobileInput.focus();
       return;
     }
+
+   
 
     submitBtn.disabled = true;
     submitBtn.innerText = "Submitting...";
 
-    // Data to Google Sheet
-    const data = {
-      productName,
-      productSize,
-      productPrice,
-      customerName,
-      mobileNumber,
-      deliveryAddress
-    };
+    try {
+      // ===============================
+      // 🔥 UPLOAD SCREENSHOT
+      // ===============================
+    
 
+      // ===============================
+      // 🔥 SAVE ORDER TO FIRESTORE
+      // ===============================
+      await addDoc(collection(db, "orders"), {
+        customerName,
+        mobileNumber,
+        deliveryAddress,
 
+        productId: product.id,
+        productName: product.name,
+        productSize: product.size,
+        productPrice: Number(product.price),
+        // productImage: product.image,
+
+        // paymentScreenshotUrl: screenshotUrl,
+
+        paymentMethod: "QR",
+        status: "new",              // new | confirmed | delivered
+        source: "website",
+
+        createdAt: serverTimestamp()
+      });
+
+      alert("✅ Order placed successfully!");
+      submitBtn.innerText = "Submitted";
+
+      // Optional reset
+      // customerNameInput.value = "";
+      // mobileInput.value = "";
+      // addressInput.value = "";
+      // screenshotInput.value = "";
+
+    } catch (error) {
+      console.error("❌ Order submission failed:", error);
+      alert("❌ Failed to place order. Please try again.");
+
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Submit";
+    }
   });
 
 });
-
