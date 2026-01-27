@@ -74,22 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     mobilePriceEl.innerText = `₹${product.price}`;
   }
 
-  // WhatsApp button
-  document.querySelectorAll(".whatsapp-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-
-      const message = `
-Hi Misart,
-
-🌿 Product: ${product.name}
-📐 Size: ${product.size}
-💰 Price: ₹${product.price}
-      `;
-
-      const url = `https://wa.me/918086783125?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank");
-    });
-  });
+  
 
 });
 

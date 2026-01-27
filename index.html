@@ -242,59 +242,9 @@
 
 
 
-<!-- <script>
-  const whatsappNumber = "918086783125"; // your WhatsApp number
 
-  document.querySelectorAll(".whatsapp-btn").forEach(button => {
-    button.addEventListener("click", function () {
 
-      const productName = this.dataset.name;
-      const productImage = this.dataset.image;
 
-      const message = 
-        `Hi Misart,%0A%0A` +
-        `I want to book the following terrarium:%0A` +
-        `🌿 Product: ${productName}%0A` +
-        `🖼 Image: ${productImage}`;
-
-      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
-
-      window.open(whatsappURL, "_blank");
-    });
-  });
-</script> -->
-
-<script>
-  const whatsappNumber = "918086783125";
-
-  document.querySelectorAll(".whatsapp-btn").forEach(button => {
-    button.addEventListener("click", function (e) {
-      e.preventDefault();
-
-      // Find the closest product card
-      const productCard = this.closest(".product-card");
-
-      // Read product name from h5
-      const productName = productCard.querySelector(".product-name").innerText;
-
-      // Read image from data attribute
-      const productImage = this.dataset.image;
-
-      const message = 
-        `Hi Misart,
-
-I want to book the following terrarium:
-🌿 Product: ${productName}
-🖼 Image: ${productImage}`;
-
-      const encodedMessage = encodeURIComponent(message);
-
-      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-      window.open(whatsappURL, "_blank");
-    });
-  });
-</script>
 
 <script>
   // Card click → navigate to product page
@@ -306,11 +256,11 @@ I want to book the following terrarium:
   });
 
   // WhatsApp button → STOP card click
-  document.querySelectorAll(".whatsapp-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation(); // 👈 VERY IMPORTANT
-    });
-  });
+  // document.querySelectorAll(".whatsapp-btn").forEach(btn => {
+  //   btn.addEventListener("click", (e) => {
+  //     e.stopPropagation(); // 👈 VERY IMPORTANT
+  //   });
+  // });
 </script>
   
 <!-- JavaScript (ONE handler for card + button) -->

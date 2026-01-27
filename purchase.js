@@ -126,25 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
       deliveryAddress
     };
 
-    const SHEET_URL = "https://script.google.com/macros/s/AKfycbxEUQxAsv-IPv4FUj4RWhcPqVS13LJIXkmZt2vNAi-stXAwsKRHS02zMvPlSdxqDWL3/exec";
-
-    fetch(SHEET_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-    .then(res => res.text())
-    .then(() => {
-      alert("Order submitted successfully!");
-      submitBtn.innerText = "Submitted";
-    })
-    .catch(() => {
-      alert("Error sending data");
-      submitBtn.disabled = false;
-      submitBtn.innerText = "Submit";
-    });
 
   });
 

@@ -47,42 +47,16 @@ const sellingProducts = [
     size: "Medium",
     description: "Mini forest ecosystem with stones",
     price: 4565
+  },
+  {
+    id: "junaid product",
+    name: "Junaid product",
+    image: "assets/Selling product/Screenshot 2026-01-22 170312.png",
+    size: "5 litter ",
+    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. M",
+    price: 556565
   }
 ];
 
 
-
-// const sellingContainer = document.getElementById("sellingProductList");
-
-// if (sellingContainer) {
-//   sellingProducts.forEach(product => {
-//     const card = document.createElement("div");
-//     card.className = "selling-product-card";
-
-//     card.innerHTML = `
-//       <div class="selling-product-image">
-//         <img src="${product.image}" alt="${product.name}">
-//       </div>
-
-//       <div class="selling-product-content">
-//         <h3>${product.name}</h3>
-//         <p class="selling-size">Size : ${product.size}</p>
-//         <p class="selling-desc">${product.description}</p>
-
-//         <div class="selling-footer">
-//           <span class="selling-price">₹${product.price}</span>
-//           <button class="btn order-btn" onclick="goToPurchase('${product.id}')">
-//             Order Now
-//           </button>
-//         </div>
-//       </div>
-//     `;
-
-//     sellingContainer.appendChild(card);
-//   });
-// }
-
-// function goToPurchase(productId) {
-//   window.location.href = `purchase.html?id=${productId}`;
-// }
 
