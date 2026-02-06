@@ -78,3 +78,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+
+// Book Now → Booking Page
+const bookNowBtn = document.getElementById("bookNowBtn");
+
+if (bookNowBtn) {
+  bookNowBtn.addEventListener("click", () => {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
+
+    if (!productId) {
+      alert("Product ID missing");
+      return;
+    }
+
+    window.location.href = `booking.html?id=${productId}`;
+  });
+}
+
+

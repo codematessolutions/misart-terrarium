@@ -58,10 +58,33 @@ window.showOrders = async function () {
   }
 };
 
-window.showBookings = function () {
-  pageTitle.innerText = "Bookings";
-  listContainer.innerHTML = "<p>Bookings coming soon 🌿</p>";
-};
+
 
 // Auto-load orders
 showOrders();
+
+// booking section function (junaid)
+
+window.showBookings = function () {
+  pageTitle.innerText = "Bookings";
+  listContainer.innerHTML = "";
+
+  const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+
+  if (bookings.length === 0) {
+    listContainer.innerHTML = "<p>No bookings yet</p>";
+    return;
+  }
+
+  bookings.forEach(b => {
+    listContainer.innerHTML += `
+      <div class="card">
+        <h3>${b.productName}</h3>
+        <p>Customer: ${b.customerName}</p>
+        <p>Mobile: ${b.mobileNumber}</p>
+        <p>PIN: ${b.pinCode}</p>
+        <p>Status: ${b.status}</p>
+      </div>
+    `;
+  });
+}
