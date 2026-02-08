@@ -38,6 +38,7 @@ window.showOrders = async function () {
           <h3>${order.productName}</h3>
           <p><strong>Customer:</strong> ${order.customerName}</p>
           <p><strong>Mobile:</strong> ${order.mobileNumber}</p>
+          <p><strong>Address:</strong> ${order.deliveryAddress}</p>
           <p><strong>Price:</strong> ₹${order.productPrice}</p>
           <p class="status"><strong>Status:</strong> ${order.status}</p>
 
@@ -65,26 +66,45 @@ showOrders();
 
 // booking section function (junaid)
 
-window.showBookings = function () {
+window.showBookings = async function () {
   pageTitle.innerText = "Bookings";
-  listContainer.innerHTML = "";
+  listContainer.innerHTML = "<p>Loading bookings...</p>";
 
-  const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+  try {
+    const q = query(
+      collection(db, "bookings"),
+      orderBy("createdAt", "desc")
+    );
 
-  if (bookings.length === 0) {
-    listContainer.innerHTML = "<p>No bookings yet</p>";
-    return;
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      listContainer.innerHTML = "<p>No bookings found</p>";
+      return;
+    }
+
+    listContainer.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const booking = doc.data();
+
+      listContainer.innerHTML += `
+        <div class="card">
+          <h3>${booking.productName}</h3>
+
+          <p><strong>Customer:</strong> ${booking.customerName}</p>
+          <p><strong>Mobile:</strong> ${booking.mobileNumber}</p>
+          <p><strong>Address:</strong> ${booking.deliveryAddress}</p>
+          <p><strong>PIN:</strong> ${booking.pinCode}</p>
+
+          <p class="status"><strong>Status:</strong> ${booking.status}</p>
+        </div>
+      `;
+    });
+
+  } catch (error) {
+    console.error("Error loading bookings:", error);
+    listContainer.innerHTML = "<p>Error loading bookings</p>";
   }
+};
 
-  bookings.forEach(b => {
-    listContainer.innerHTML += `
-      <div class="card">
-        <h3>${b.productName}</h3>
-        <p>Customer: ${b.customerName}</p>
-        <p>Mobile: ${b.mobileNumber}</p>
-        <p>PIN: ${b.pinCode}</p>
-        <p>Status: ${b.status}</p>
-      </div>
-    `;
-  });
-}

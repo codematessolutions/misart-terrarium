@@ -1,3 +1,12 @@
+import { db } from "./firebase.js";
+import {
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+
 // 1. Get product id from URL
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
@@ -11,7 +20,7 @@ if (!product) {
 }
 
 // 3. Submit booking
-document.querySelector(".submit-btn").addEventListener("click", () => {
+document.querySelector(".submit-btn").addEventListener("click", async () => {
 
   const customerName = document.getElementById("customerName").value.trim();
   const mobileNumber = document.getElementById("mobileNumber").value.trim();
@@ -46,13 +55,22 @@ document.querySelector(".submit-btn").addEventListener("click", () => {
     pinCode,
 
     status: "pending",
-    createdAt: new Date().toISOString()
+    createdAt: serverTimestamp()
   };
 
-  // TEMPORARY STORAGE (until Firebase)
-  const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
-  bookings.push(bookingData);
-  localStorage.setItem("bookings", JSON.stringify(bookings));
+ 
+  try {
+  await addDoc(collection(db, "bookings"), bookingData);
+
+  alert("Booking submitted successfully!");
+  window.location.href = "index.html";
+
+} catch (error) {
+  console.error("Error saving booking:", error);
+  alert("Failed to submit booking");
+}
+
+
 
   alert("Booking submitted successfully!");
   window.location.href = "index.html";
