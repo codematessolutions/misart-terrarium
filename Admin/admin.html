@@ -23,6 +23,22 @@
   <!-- Main Content -->
   <main class="content">
     <h1 id="pageTitle">Orders</h1>
+    <div class="filter-bar">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by name or mobile"/>
+        
+
+        <select id="statusFilter">
+          <option value="">All Status</option>
+        </select>
+   
+        <button onclick="applyFilter()">Apply</button>
+        <button onclick="clearFilter()">Clear</button>
+    </div>
+
+
     <div id="listContainer" class="list"></div>
   </main>
 
